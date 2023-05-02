@@ -4,60 +4,32 @@ using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
 {
-    GameObject player;
+
     GameObject playerCamera;
 
-    /* PlayerMovement */
-    float movementSpeed = 10.0f;
-    bool isGrounded = true;
-
-
-    /* Camera */
-    float cameraVerticalRotation = 0.0f;
-    float verticalRotationLimit = 60.0f;
-    float cameraSensitivity = 5f;
-
     /* Interaction */
-    public float minInteractDistance = 2.0f;
+    public float minInteractDistance = 3.0f;
+    GameObject currentGazeTarget;
+
+    bool interactionEnabled = true;
 
     /* UI */
     public UIScript ui;
 
     void Start()
     {
-        player = gameObject;
-        playerCamera = player.transform.Find("PlayerCamera").gameObject;
+        playerCamera = transform.Find("PlayerCamera").gameObject;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     void Update()
     {
-        playerMovement();
-        playerRotation();
-
+        if (!interactionEnabled) return;
         look();
-
+        interact();
     }
 
-    void playerMovement()
-    {
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
-        Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
-        player.transform.Translate(movement * movementSpeed * Time.deltaTime);
-    }
-
-    void playerRotation()
-    {
-        // vertical mouse movement rotates camera up and down, between -90 and 90 degrees
-        float mouseVertical = Input.GetAxisRaw("Mouse Y");
-        float newRotation = cameraVerticalRotation - mouseVertical * cameraSensitivity;
-        cameraVerticalRotation = Mathf.Clamp(newRotation, -verticalRotationLimit, verticalRotationLimit);
-        playerCamera.transform.localEulerAngles = new Vector3(cameraVerticalRotation, 0, 0);
-
-        // horizontal mouse movement rotates the whole player
-        float horizontalRotation = Input.GetAxis("Mouse X");
-        player.transform.Rotate(0, horizontalRotation * cameraSensitivity, 0);
-    }
 
     void look()
     {
@@ -70,17 +42,47 @@ public class PlayerScript : MonoBehaviour
                 switch (target.transform.tag)
                 {
                     case "Computer":
-                        ui.showMessage();
+                        ui.showMessage(target.transform.GetComponent<LaptopScript>().interactMessage);
+                        currentGazeTarget = target.transform.gameObject;
                         break;
                     default:
                         ui.hideMessages();
+                        currentGazeTarget = null;
                         break;
                 }
             }
             else
             {
                 ui.hideMessages();
+                currentGazeTarget = null;
             }
         }
+    }
+
+    void interact()
+    {
+        // if the player hits the interact key while looking at an interactable object, launch the action
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Debug.Log(currentGazeTarget.name);
+            if (currentGazeTarget != null)
+            {
+                switch (currentGazeTarget.tag)
+                {
+                    case "Computer":
+                        LaptopScript targetLaptop = currentGazeTarget.GetComponent<LaptopScript>();
+                        ui.showIDE(targetLaptop); // todo with InteractableObject interface
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+    }
+
+    public void switchInteraction()
+    {
+        interactionEnabled = !interactionEnabled;
     }
 }
