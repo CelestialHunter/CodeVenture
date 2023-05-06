@@ -9,7 +9,7 @@ public class PlayerScript : MonoBehaviour
 
     /* Interaction */
     public float minInteractDistance = 3.0f;
-    GameObject currentGazeTarget;
+    Interactable currentGazeTarget;
 
     bool interactionEnabled = true;
 
@@ -35,27 +35,28 @@ public class PlayerScript : MonoBehaviour
     {
         RaycastHit target;
 
-        if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out target, 100))
+        if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out target, 100) && target.distance <= minInteractDistance)
         {
-            if (target.distance <= minInteractDistance)
+            Interactable targetObj = target.collider.gameObject.GetComponent<Interactable>();
+            if (targetObj != null && targetObj != currentGazeTarget)
             {
-                switch (target.transform.tag)
-                {
-                    case "Computer":
-                        ui.showMessage(target.transform.GetComponent<LaptopScript>().interactMessage);
-                        currentGazeTarget = target.transform.gameObject;
-                        break;
-                    default:
-                        ui.hideMessages();
-                        currentGazeTarget = null;
-                        break;
-                }
+                if (currentGazeTarget != null) currentGazeTarget.unhighlight();
+                currentGazeTarget = targetObj;
+                currentGazeTarget.highlight();
+                ui.showMessage(targetObj.interactMessage);
             }
             else
             {
-                ui.hideMessages();
-                currentGazeTarget = null;
-            }
+                //currentGazeTarget.unhighlight();
+                //currentGazeTarget = null;
+                //ui.hideMessages();
+             }
+        }
+        else
+        {
+            if (currentGazeTarget != null) currentGazeTarget.unhighlight();
+            currentGazeTarget = null;
+            ui.hideMessages();
         }
     }
 
@@ -65,18 +66,9 @@ public class PlayerScript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            Debug.Log(currentGazeTarget.name);
             if (currentGazeTarget != null)
             {
-                switch (currentGazeTarget.tag)
-                {
-                    case "Computer":
-                        LaptopScript targetLaptop = currentGazeTarget.GetComponent<LaptopScript>();
-                        ui.showIDE(targetLaptop); // todo with InteractableObject interface
-                        break;
-                    default:
-                        break;
-                }
+                currentGazeTarget.interact();
             }
         }
     }

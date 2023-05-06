@@ -45,6 +45,6 @@ public class IDEScript : MonoBehaviour
     public void runCode()
     {
         resultText.text = currentLaptop.runCode();
-        resultPanel.active = !string.IsNullOrEmpty(resultText.text);
+        resultPanel.SetActive(!string.IsNullOrEmpty(resultText.text));
     }
 }

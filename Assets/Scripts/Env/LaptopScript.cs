@@ -7,26 +7,42 @@ using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 
-public class LaptopScript : MonoBehaviour
+public class LaptopScript : MonoBehaviour, Interactable
 {
     public string interactMessage = "Press E to interact";
+    public bool isInteractable = true;
+    public UIScript ui;
+    public Material[] materials;
     
     string code = "";
     public string fileName = "Untitled";
     string compilerPath;
 
     string envPath;
-    
+
+    string Interactable.interactMessage { get => interactMessage; }
+    bool Interactable.isInteractable { get => isInteractable; }
+
     void Start()
     {
         envPath = Application.dataPath + "/Env/";
         makeCompilerPath();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void interact()
     {
-        
+        if (!isInteractable) return;
+        ui.showIDE(this);
+    }
+
+    public void highlight()
+    {
+        // todo
+    }
+
+    public void unhighlight()
+    {
+        // todo
     }
 
     // TODO: handle missing gcc from PATH
