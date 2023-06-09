@@ -28,6 +28,7 @@ public class PlayerScript : MonoBehaviour
         if (!interactionEnabled) return;
         look();
         interact();
+        minimap();
     }
 
 
@@ -76,5 +77,13 @@ public class PlayerScript : MonoBehaviour
     public void switchInteraction()
     {
         interactionEnabled = !interactionEnabled;
+    }
+
+    void minimap()
+    {
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            ui.toggleMinimap();
+        }
     }
 }

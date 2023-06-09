@@ -9,8 +9,19 @@ public class PlayerMovement : MonoBehaviour
     CharacterController controller;
 
     /* PlayerMovement */
-    float movementSpeed = 10.0f;
+    public float movementSpeed = 10.0f;
+    public float runningSpeed = 15.0f;
+    public float currentSpeed;
+    public float jumpHeigth = 2.0f;
+
+    public float gravity = -9.81f;
+
+    public Transform groundCheck;
+    public float groundDistance = 0.4f;
+    public LayerMask groundMask;
     bool isGrounded = true;
+
+    Vector3 velocity;
 
     /* Camera */
     public float cameraVerticalRotation = 0.0f;
@@ -24,24 +35,52 @@ public class PlayerMovement : MonoBehaviour
         player = gameObject;
         playerCamera = player.transform.Find("PlayerCamera").gameObject;
         controller = player.GetComponent<CharacterController>();
+
+        currentSpeed = movementSpeed;
     }
 
     // Update is called once per frame
     void Update()
     {
-        playerMovement();
-        playerRotation();
-    }
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
+        if (isGrounded && velocity.y < 0) velocity.y = -2.0f;
+
+        playerMovement();
+        playerRotation();        
+    }
     void playerMovement()
     {
         if (!movementEnabled) return;
-        
+
+        // sprint/run
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            currentSpeed = Mathf.Clamp(currentSpeed + .1f, movementSpeed, runningSpeed);
+        }
+        else
+        {
+            currentSpeed = Mathf.Clamp(currentSpeed - .1f, movementSpeed, runningSpeed);
+        }        
+
+        // movement
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
         Vector3 movement = player.transform.right * moveHorizontal + player.transform.forward * moveVertical;
-        controller.Move(movement * movementSpeed * Time.deltaTime);
-        //player.transform.Translate(movement * movementSpeed * Time.deltaTime);
+        controller.Move(movement * currentSpeed * Time.deltaTime);
+        
+
+        // jumping
+        if (Input.GetButtonDown("Jump") && isGrounded)
+        {
+            isGrounded = false;
+            velocity.y = Mathf.Sqrt(jumpHeigth * -2.0f * gravity);
+        }
+
+        // gravity
+        velocity.y += gravity * Time.deltaTime;
+
+        controller.Move(velocity * Time.deltaTime);
     }
 
     void playerRotation()
@@ -55,10 +94,8 @@ public class PlayerMovement : MonoBehaviour
         playerCamera.transform.localEulerAngles = new Vector3(cameraVerticalRotation, 0, 0);
 
         // horizontal mouse movement rotates the whole player
-        float horizontalRotation = Input.GetAxis("Mouse X") * cameraSensitivity * Time.deltaTime;
-        //player.transform.Rotate(0, horizontalRotation, 0);
-        player.transform.Rotate(Vector3.up * horizontalRotation);
-
+        float mouseHorizontal = Input.GetAxis("Mouse X") * cameraSensitivity * Time.deltaTime;
+        player.transform.Rotate(Vector3.up * mouseHorizontal, Space.World);
     }
 
     public void switchMovement()

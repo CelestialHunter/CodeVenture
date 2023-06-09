@@ -49,4 +49,12 @@ public class ByteScript : MonoBehaviour
         }
         return val;
     }
+
+    public void setValue(byte val)
+    {
+        for (int i = 0; i < 8; i++)
+        {
+            bits[i].setValue((val & (1 << i)) != 0);
+        }
+    }
 }
