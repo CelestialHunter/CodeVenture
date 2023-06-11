@@ -55,6 +55,5 @@ public class ProjectorScript : MonoBehaviour, Interactable
     void Update()
     {
         
-    }
-    
+    }    
 }
