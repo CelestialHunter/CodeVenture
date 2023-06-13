@@ -29,6 +29,7 @@ public class PlayerScript : MonoBehaviour
         look();
         interact();
         minimap();
+        pauseGame();
     }
 
 
@@ -84,6 +85,14 @@ public class PlayerScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.M))
         {
             ui.toggleMinimap();
+        }
+    }
+
+    void pauseGame()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            ui.enablePause();
         }
     }
 }

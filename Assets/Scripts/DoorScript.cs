@@ -93,6 +93,13 @@ public class DoorScript : MonoBehaviour, Interactable
         _isInteractable = true;
     }
 
+    public void unlock()
+    {
+        isLocked = false;
+        // TODO - play Unlocked sound
+        
+    }
+
 
 
     // Start is called before the first frame update

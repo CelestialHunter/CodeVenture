@@ -7,9 +7,9 @@ using UnityEngine.Events;
 public class ObjectiveScript : MonoBehaviour
 {
     public BoolCondition condition;
+    public ObjectiveSystem objectiveSystem;
+    public string objectiveName;
 
-    public DoorScript[] targetDoors;
-    
     // Start is called before the first frame update
     void Start()
     {
@@ -21,10 +21,8 @@ public class ObjectiveScript : MonoBehaviour
     {
         if(condition != null)
         {
-            foreach (DoorScript door in targetDoors)
-            {
-                door.isLocked = !condition.Invoke();
-            }
+            if(condition.Invoke())
+                objectiveSystem.setObjective(objectiveName);            
         }
     }    
 }

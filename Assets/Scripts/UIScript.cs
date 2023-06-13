@@ -10,6 +10,7 @@ public class UIScript : MonoBehaviour
     public GameObject IDE;
     public RawImage minimap;
     public RawImage keysHint;
+    public GameObject escMenu;
     
     private List<GameObject> messages;
 
@@ -83,6 +84,32 @@ public class UIScript : MonoBehaviour
     public void disableMinimap()
     {
         minimap.gameObject.SetActive(false);
+    }
+
+
+    public void enablePause()
+    {
+        escMenu.SetActive(true);
+        GameObject.Find("Player").GetComponent<PlayerMovement>().switchMovement();
+        GameObject.Find("Player").GetComponent<PlayerScript>().switchInteraction();
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+    
+    public void disablePause()
+    {
+        escMenu.SetActive(false);
+        GameObject.Find("Player").GetComponent<PlayerMovement>().switchMovement();
+        GameObject.Find("Player").GetComponent<PlayerScript>().switchInteraction();
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    public void quitGame()
+    {
+        // save game
+        GameObject.Find("ObjectiveSystem").GetComponent<ObjectiveSystem>().SaveObjectives();
+        Application.Quit();
     }
 
     public IEnumerator showKeys()

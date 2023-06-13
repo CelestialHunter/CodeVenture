@@ -57,4 +57,9 @@ public class ByteScript : MonoBehaviour
             bits[i].setValue((val & (1 << i)) != 0);
         }
     }
+
+    public bool checkAgainst(int val)
+    {
+        return getValueUnsigned() == (byte)(val&0xFF);
+    }
 }
