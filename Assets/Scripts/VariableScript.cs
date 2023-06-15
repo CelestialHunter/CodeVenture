@@ -37,7 +37,7 @@ public class VariableScript : MonoBehaviour, Interactable
 
         GameObject.Find("VariableCamera").GetComponent<Camera>().targetTexture = renderTexture;
         peerObj.GetComponent<MeshRenderer>().material.mainTexture = renderTexture;
-        GameObject.Find("VariableByte").GetComponent<ByteScript>().setValue(value);
+        GameObject.Find("VariableByte").GetComponent<ByteScript>().setValue_int(value);
     }
     
     public void interact()

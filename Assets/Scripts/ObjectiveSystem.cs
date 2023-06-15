@@ -42,6 +42,7 @@ public class ObjectiveSystem : MonoBehaviour
     public List<Objective> objectives;
 
     public DoorSystem doorSystem;
+    public UIScript ui;
 
     private void Start()
     {
@@ -111,10 +112,13 @@ public class ObjectiveSystem : MonoBehaviour
         Objective o = objectives.Where(x => x.objectiveName == objectiveName).FirstOrDefault();
         o.CompleteObjective();
 
+        
         foreach (string doorName in o.doorNames)
         {
             doorSystem.unlockDoor(doorName);
         }
+        StartCoroutine(ui.showUnlockedDoorsNotif(o.doorNames));
+        GameObject.Find("SoundManager").GetComponent<SoundsManager>().playSound("doorUnlock");
     }
 
     

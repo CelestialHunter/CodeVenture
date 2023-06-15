@@ -12,13 +12,14 @@ public class LaptopScript : MonoBehaviour, Interactable
     public string interactMessage = "Press E to interact";
     public bool isInteractable = true;
     public UIScript ui;
-    public Material[] materials;
     
     string code = "";
     public string fileName = "Untitled";
     string compilerPath;
 
     string envPath;
+
+    string result = "";
 
     string Interactable.interactMessage { get => interactMessage; }
     bool Interactable.isInteractable { get => isInteractable; }
@@ -190,6 +191,12 @@ public class LaptopScript : MonoBehaviour, Interactable
         writer.Write(output);
         writer.Close();
 
+        result = output;
         return output;
+    }
+
+    public bool checkOutput(string output)
+    {
+        return string.Compare(result, output, StringComparison.InvariantCultureIgnoreCase) == 0;
     }
 }

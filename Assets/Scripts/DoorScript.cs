@@ -95,9 +95,7 @@ public class DoorScript : MonoBehaviour, Interactable
 
     public void unlock()
     {
-        isLocked = false;
-        // TODO - play Unlocked sound
-        
+        isLocked = false;     
     }
 
 

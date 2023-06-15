@@ -9,16 +9,16 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Ground
+  - 
   - Water
   - UI
-  - Minimap_ground
-  - Minimap_1floor
-  - Minimap_2floor
-  - 
-  - 
-  - 
-  - 
+  - Ground
+  - 1stFloor
+  - 2ndFloor
+  - Minimap_symbols
+  - GroundMinimap
+  - 1stFloorMinimap
+  - 2ndFloorMinimap
   - 
   - 
   - 

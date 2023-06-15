@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIScript : MonoBehaviour
@@ -11,6 +12,7 @@ public class UIScript : MonoBehaviour
     public RawImage minimap;
     public RawImage keysHint;
     public GameObject escMenu;
+    public GameObject doorUnlockedNotif;
     
     private List<GameObject> messages;
 
@@ -109,7 +111,7 @@ public class UIScript : MonoBehaviour
     {
         // save game
         GameObject.Find("ObjectiveSystem").GetComponent<ObjectiveSystem>().SaveObjectives();
-        Application.Quit();
+        SceneManager.LoadScene(0);
     }
 
     public IEnumerator showKeys()
@@ -127,5 +129,43 @@ public class UIScript : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
         }
         keysHint.gameObject.SetActive(false);
+    }
+
+    public IEnumerator showUnlockedDoorsNotif(string[] doors)
+    {
+        string notif = "";
+        foreach(string door in doors)
+        {
+            notif += "Door " + door + " unlocked\n";
+        }
+
+        doorUnlockedNotif.GetComponentInChildren<TMP_Text>().SetText(notif);
+
+        doorUnlockedNotif.SetActive(true);
+
+        Color c = doorUnlockedNotif.GetComponentInChildren<TMP_Text>().color;
+
+        TMP_Text text = doorUnlockedNotif.GetComponentInChildren<TMP_Text>();
+        RawImage keyImage = doorUnlockedNotif.GetComponentInChildren<RawImage>();
+
+        for (float i = 0; i <= 1; i += 0.1f)
+        {
+            c.a = i;
+            text.color = c;
+            keyImage.color = c;
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        yield return new WaitForSeconds(2f);
+
+        for (float i = 1; i >= 0; i -= 0.1f)
+        {
+            c.a = i;
+            text.color = c;
+            keyImage.color = c;
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        doorUnlockedNotif.SetActive(false);
     }
 }

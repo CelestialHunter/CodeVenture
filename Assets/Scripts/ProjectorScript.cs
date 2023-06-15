@@ -13,6 +13,8 @@ public class ProjectorScript : MonoBehaviour, Interactable
 
     public VideoPlayer videoPlayer;
 
+    public bool videoWatched { get; set; }
+
     public string interactMessage => (_isVideoPlaying ? "Press E to pause video" : "Press E to play video");
 
     public bool isInteractable => _isInteractable;
@@ -48,7 +50,8 @@ public class ProjectorScript : MonoBehaviour, Interactable
     // Start is called before the first frame update
     void Start()
     {
-        videoPlayer.loopPointReached += (videoPlayer) => { _isVideoPlaying = false; };
+        videoWatched = false;
+        videoPlayer.loopPointReached += (videoPlayer) => { _isVideoPlaying = false; videoWatched = true; };
     }
 
     // Update is called once per frame

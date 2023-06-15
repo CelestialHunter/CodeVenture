@@ -6,9 +6,12 @@ using UnityEngine.Events;
 
 public class ObjectiveScript : MonoBehaviour
 {
-    public BoolCondition condition;
+    public BoolCondition[] condition;
     public ObjectiveSystem objectiveSystem;
     public string objectiveName;
+
+    private bool isCompleted = false;
+    private bool isDone = false;
 
     // Start is called before the first frame update
     void Start()
@@ -19,12 +22,23 @@ public class ObjectiveScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(condition != null)
+        if (isDone) return;
+        checkCompleted();
+        if (isCompleted)
         {
-            if(condition.Invoke())
-                objectiveSystem.setObjective(objectiveName);            
+            objectiveSystem.setObjective(objectiveName);
+            isDone = true;
         }
-    }    
+    }   
+    
+    void checkCompleted()
+    {
+        isCompleted = true;
+        foreach (BoolCondition cond in condition)
+        {
+            isCompleted = isCompleted && cond.Invoke();
+        }
+    }
 }
 
 [Serializable]
