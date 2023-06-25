@@ -167,7 +167,6 @@ public class DisplayScript : MonoBehaviour, Interactable
                     byteObj.setValue(System.BitConverter.GetBytes(value));
                     break;
                 }
-                break;
             case ByteScript.ByteType.Float:
                 {
                     float value = float.Parse(input_valueText.text);

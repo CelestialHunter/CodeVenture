@@ -8,9 +8,6 @@ public class ProjectorScript : MonoBehaviour, Interactable
     public bool _isInteractable = true;
     public bool _isVideoPlaying = false;
 
-    public GameObject projectorScreen;
-    public GameObject projectorObject;
-
     public VideoPlayer videoPlayer;
 
     public bool videoWatched { get; set; }
@@ -22,7 +19,7 @@ public class ProjectorScript : MonoBehaviour, Interactable
     public void highlight()
     {
         if (!isInteractable) return;
-        projectorObject.transform.GetComponent<Renderer>().material.shader = Shader.Find("Unlit/Highlight");
+        transform.GetComponent<Renderer>().material.shader = Shader.Find("Unlit/Highlight");
     }
 
     public void interact()
@@ -44,19 +41,12 @@ public class ProjectorScript : MonoBehaviour, Interactable
     public void unhighlight()
     {
         if (!isInteractable) return;
-        projectorObject.transform.GetComponent<Renderer>().material.shader = Shader.Find("Standard");
+        transform.GetComponent<Renderer>().material.shader = Shader.Find("Standard");
     }
-
-    // Start is called before the first frame update
+    
     void Start()
     {
         videoWatched = false;
         videoPlayer.loopPointReached += (videoPlayer) => { _isVideoPlaying = false; videoWatched = true; };
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }    
 }

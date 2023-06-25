@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="IDEScript">
+    <Position X="2.5" Y="4" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>ACAAAACAAAAAAAAAAgAAAIIAEAAAAAEAAAAAEAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Env\IDEScript.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="currentLaptop" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="LaptopScript">
+    <Position X="6.75" Y="2.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AIAACgAAICAAEAAABAAAAAIAPCAAACEAQEBgAAAAAAg=</HashCode>
+      <FileName>Assets\Scripts\Env\LaptopScript.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="ui" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="UIScript">
+    <Position X="10.75" Y="2.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAQCAAAQICAIhACAgAAAAQAAAQAAQACFAAISACAAAIg=</HashCode>
+      <FileName>Assets\Scripts\UIScript.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

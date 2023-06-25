@@ -39,10 +39,5 @@ public class MinimapCameraScript : MonoBehaviour
             // set culling mask to "1stFloor"
             cameraComponent.cullingMask = LayerMask.GetMask(new string[] { "1stFloor", "1stFloorMinimap", "Minimap_symbols" });
         }
-        else
-        {
-            // set culling mask to "2ndFloor"
-            cameraComponent.cullingMask = LayerMask.GetMask(new string[] { "2ndFloor", "2ndFloorMinimap", "Minimap_symbols" });
-        }
     }
 }

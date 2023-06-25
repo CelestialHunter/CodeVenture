@@ -47,12 +47,6 @@ public class PlayerScript : MonoBehaviour
                 currentGazeTarget.highlight();
                 ui.showMessage(targetObj.interactMessage);
             }
-            else
-            {
-                //currentGazeTarget.unhighlight();
-                //currentGazeTarget = null;
-                //ui.hideMessages();
-             }
         }
         else
         {
@@ -64,7 +58,7 @@ public class PlayerScript : MonoBehaviour
 
     void interact()
     {
-        // if the player hits the interact key while looking at an interactable object, launch the action
+        // daca jucatorul apasa tasta de interactiune in timp ce se uita la un obiect interactabil, lanseaza actiunea
 
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -82,7 +76,7 @@ public class PlayerScript : MonoBehaviour
 
     void minimap()
     {
-        if (Input.GetKeyDown(KeyCode.M))
+        if (Input.GetKeyDown(KeyCode.M) || Input.GetKeyDown(KeyCode.Tab))
         {
             ui.toggleMinimap();
         }

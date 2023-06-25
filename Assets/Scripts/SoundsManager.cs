@@ -1,28 +1,36 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class SoundsManager : MonoBehaviour
 {
-    public AudioClip doorUnlockSound;
-    
-    // Start is called before the first frame update
-    void Start()
+    [Serializable]
+    public class PlaySound
     {
-        
+        public string name;
+        public AudioClip sound;
+
+        public PlaySound()
+        {
+            name = "";
+            sound = null;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public List<PlaySound> sounds;
 
     public void playSound(string sound)
     {
-        if (string.Compare(sound, "doorUnlock") == 0)
+        try
         {
-            GetComponent<AudioSource>().PlayOneShot(doorUnlockSound);
+            AudioClip clip = sounds.Where(s => (string.Compare(s.name, sound) == 0)).First<PlaySound>().sound;
+            GetComponent<AudioSource>().PlayOneShot(clip);
+        }
+        catch (Exception ex)
+        {
+            Debug.Log("Sound [" + sound + "] does not exist.\n");
         }
     }
 }

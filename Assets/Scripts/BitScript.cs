@@ -38,12 +38,10 @@ public class BitScript : MonoBehaviour, Interactable
         transform.GetComponent<Renderer>().material.shader = Shader.Find("Standard");
     }
     
-    // Start is called before the first frame update
     void Start()
     {
         value = false;
         valueText.text = "0";
-
     }
 
     public int getIntValue()

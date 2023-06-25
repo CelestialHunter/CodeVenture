@@ -9,7 +9,7 @@ using UnityEngine;
 
 public class LaptopScript : MonoBehaviour, Interactable
 {
-    public string interactMessage = "Press E to interact";
+    public string interactMessage = "Start coding";
     public bool isInteractable = true;
     public UIScript ui;
     
@@ -38,12 +38,12 @@ public class LaptopScript : MonoBehaviour, Interactable
 
     public void highlight()
     {
-        // todo
+        return;
     }
 
     public void unhighlight()
     {
-        // todo
+        return;
     }
 
     // TODO: handle missing gcc from PATH
@@ -68,9 +68,9 @@ public class LaptopScript : MonoBehaviour, Interactable
 
     public void loadCode()
     {
-        // check if file named fileName.c exists in Env/fileName directory
-        // if not, return empty string
-        // else, return the file content
+        // verifica daca exista fisierul fileName.c in directorul Env/fileName
+        // daca nu exista, returneaza string gol
+        // altfel, returneaza continutul fisierului
 
         string path = envPath + fileName + "/" + fileName + ".c";
         if (!File.Exists(path))
@@ -87,13 +87,13 @@ public class LaptopScript : MonoBehaviour, Interactable
 
     public void saveCode()
     {
-        // check if folder named fileName exists in Env directory
-        // if not, create it
+        // verifica daca exista directorul Env/fileName
+        // daca nu exista, creeaza-l
 
-        // check if file named fileName.c exists in Env/fileName directory
-        // if not, create it
+        // verifica daca exista fisierul fileName.c in directorul Env/fileName
+        // daca nu exista, creeaza-l
 
-        // write code to file
+        // scrie codul in fisier
 
         if (!Directory.Exists(envPath + fileName))
         {
@@ -108,16 +108,13 @@ public class LaptopScript : MonoBehaviour, Interactable
 
     public void compileCode()
     {
-        // check if gcc exists in PATH
-        // if not, show error message
+        // verifica daca exista fisierul fileName.c in directorul Env/fileName
+        // daca nu exista, afiseaza mesaj de eroare
 
-        // check if file named fileName.c exists in Env/fileName directory
-        // if not, show error message
+        // compileaza codul cu output in compileMessage.txt
+        // daca exista erori, afiseaza mesaj de eroare
 
-        // compile code with output to compileMessage.txt
-        // if error, show error message
-
-        // if no error, show success message
+        // daca nu exista erori, afiseaza mesaj de succes
 
         if (!File.Exists(envPath + fileName + "/" + fileName + ".c"))
         {
@@ -162,10 +159,12 @@ public class LaptopScript : MonoBehaviour, Interactable
 
     public string runCode()
     {
-        // check if file named fileName.exe exists in Env/fileName directory
-        // if not, display "Compile first"
+        // verifica daca exista fisierul fileName.exe in directorul Env/fileName
+        // daca nu exista, afiseaza mesaj 
 
-        // run code with output to runMessage.txt
+        // ruleaza codul cu output in runMessage.txt
+
+        // afiseaza continutul fisierului runMessage.txt
 
         if (!File.Exists(envPath + fileName + "/" + fileName + ".exe"))
         {

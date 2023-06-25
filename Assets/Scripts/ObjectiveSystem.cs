@@ -44,6 +44,8 @@ public class ObjectiveSystem : MonoBehaviour
     public DoorSystem doorSystem;
     public UIScript ui;
 
+    private SoundsManager soundsManager;
+
     private void Start()
     {
         GameObject go;
@@ -52,6 +54,8 @@ public class ObjectiveSystem : MonoBehaviour
             LoadObjectives();
             Destroy(go);           
         }
+
+        soundsManager = GameObject.Find("SoundManager").GetComponent<SoundsManager>();
     }
 
     public void SaveObjectives()
@@ -118,7 +122,8 @@ public class ObjectiveSystem : MonoBehaviour
             doorSystem.unlockDoor(doorName);
         }
         StartCoroutine(ui.showUnlockedDoorsNotif(o.doorNames));
-        GameObject.Find("SoundManager").GetComponent<SoundsManager>().playSound("doorUnlock");
+        
+        soundsManager.playSound("doorUnlock");
     }
 
     

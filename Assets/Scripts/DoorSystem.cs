@@ -7,21 +7,13 @@ public class DoorSystem : MonoBehaviour
 
     public List<DoorScript> doors;
     
-    // Start is called before the first frame update
     void Start()
     {
-        // populate doors list with all children
         doors = new List<DoorScript>();
         foreach (Transform child in transform)
         {
             doors.Add(child.GetComponentInChildren<DoorScript>());
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void unlockDoor(string doorName)

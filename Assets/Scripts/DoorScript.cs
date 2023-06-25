@@ -44,8 +44,8 @@ public class DoorScript : MonoBehaviour, Interactable
     public void open()
     {
         isOpen = true;
-
-        // animate door - y rotation 0->90
+        
+        // animatia usii - rotatie pe y 0->90
         StartCoroutine(openDoor());
     }
 
@@ -53,7 +53,7 @@ public class DoorScript : MonoBehaviour, Interactable
     {
         isOpen = false;
 
-        // animate door - y rotation 90->0
+        // animatia usii - rotatie pe y 90->0
         StartCoroutine(closeDoor());
     }
 
@@ -98,17 +98,8 @@ public class DoorScript : MonoBehaviour, Interactable
         isLocked = false;     
     }
 
-
-
-    // Start is called before the first frame update
     void Start()
     {
         roomNumberText.text = roomName;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }

@@ -4,31 +4,31 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    GameObject player;
-    GameObject playerCamera;
-    CharacterController controller;
+    GameObject player;                                  // referinta la GameObject-ul caruia ii este atasat acest script
+    GameObject playerCamera;                            // referinta la GameObject-ul care contine camera
+    CharacterController controller;                     // referinta la componenta ChracterController atasata GameObject-ului Player
 
     /* PlayerMovement */
-    public float movementSpeed = 10.0f;
-    public float runningSpeed = 15.0f;
-    public float currentSpeed;
-    public float jumpHeigth = 2.0f;
+    public float movementSpeed = 10.0f;                 // viteza de deplasare
+    public float runningSpeed = 15.0f;                  // viteza de alergare
+    public float currentSpeed;                          // viteza la un moment dat - se utilizeaza pentru tranzitia intre mers si alergare
+    public float jumpHeigth = 2.0f;                     // inaltimea saltului
 
-    public float gravity = -9.81f;
+    public float gravity = -9.81f;                      // constanta gravitationala - simulam forta gravitationala
 
-    public Transform groundCheck;
-    public float groundDistance = 0.4f;
-    public LayerMask groundMask;
-    bool isGrounded = true;
+    public Transform groundCheck;                       // referinta la un GameObject care este folosit pentru a verifica daca jucatorul atinge solul
+    public float groundDistance = 0.4f;                 // distanta de la player la sol - utilizata in verificarea daca jucatorul atinge solul
+    public LayerMask groundMask;                        // masca care contine toate obiectele care sunt considerate sol
+    bool isGrounded = true;                             // fanion care indica daca jucatorul atinge solul
 
-    Vector3 velocity;
+    Vector3 velocity;                                   // vectorul de viteza - utilizat pentru implementarea saltului si a simula forta gravitationala
 
     /* Camera */
-    public float cameraVerticalRotation = 0.0f;
-    public float verticalRotationLimit = 60.0f;
-    public float cameraSensitivity = 100f;
+    public float cameraVerticalRotation = 0.0f;         // rotatia pe axa verticala a camerei
+    public float verticalRotationLimit = 60.0f;         // limita de rotatie pe axa verticala a camerei
+    public float cameraSensitivity = 100f;              // sensibilitatea camerei
 
-    bool movementEnabled = true;
+    bool movementEnabled = true;                        // fanion care indica daca jucatorul poate sa se miste - util in momentul in care jucatorul interactioneaza cu un obiect
 
     void Start()
     {
@@ -88,15 +88,15 @@ public class PlayerMovement : MonoBehaviour
     void playerRotation()
     {
         if (!movementEnabled) return;
-        
-        // vertical mouse movement rotates camera up and down, between -90 and 90 degrees
+
+        // miscarea verticala a mouse-ului roteste camera pe axa verticala, intre limitele specificate
         float mouseVertical = Input.GetAxisRaw("Mouse Y") * cameraSensitivity * Time.deltaTime;
         float newRotation = cameraVerticalRotation - mouseVertical;
         cameraVerticalRotation = Mathf.Clamp(newRotation, -verticalRotationLimit, verticalRotationLimit);
         playerCamera.transform.localEulerAngles = new Vector3(cameraVerticalRotation, 0, 0);
 
-        // horizontal mouse movement rotates the whole player
-        float mouseHorizontal = Input.GetAxis("Mouse X") * cameraSensitivity * Time.deltaTime;
+        // miscarea orizontala a mouse-ului roteste player-ul pe axa orizontala
+        float mouseHorizontal = Input.GetAxisRaw("Mouse X") * cameraSensitivity * Time.deltaTime;
         player.transform.Rotate(Vector3.up * mouseHorizontal, Space.World);
     }
 
